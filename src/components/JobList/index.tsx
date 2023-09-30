@@ -96,7 +96,7 @@ const JobList: React.FC = () => {
               placeholder="Filter by city, state, zip code or country"
             />
           </div>
-          <div>
+          <div css={inputCheckbox}>
             <input
               type="checkbox"
               name="full_time"
@@ -106,9 +106,11 @@ const JobList: React.FC = () => {
                 setForm((prev) => ({ ...prev, full_time: !form.full_time }))
               }
             />
-            <label htmlFor="location">Full Time Only</label>
+            <label htmlFor="full_time">Full Time Only</label>
           </div>
-          <input type="submit" value="Search" />
+          <button type="submit">
+            <h3>Search</h3>
+          </button>
         </form>
       </section>
       <section css={listContainerStyle}>
@@ -139,6 +141,8 @@ const JobList: React.FC = () => {
 };
 
 const formContainerStyle = css`
+  padding: 20px 0;
+
   form {
     width: 95%;
     max-width: 1400px;
@@ -146,9 +150,26 @@ const formContainerStyle = css`
     display: flex;
     gap: 40px;
     align-items: center;
+  }
 
-    label {
-      font-weight: bold;
+  label {
+    font-weight: bold;
+  }
+
+  form > button {
+    background: var(--clr-primary);
+    border: 1px solid var(--clr-secondary);
+    border-radius: 4px;
+    padding: 12px 16px;
+    color: #fff;
+    cursor: pointer;
+
+    h3 {
+      margin: 0;
+    }
+
+    &:hover {
+      background-color: var(--clr-secondary);
     }
   }
 `;
@@ -156,13 +177,19 @@ const formContainerStyle = css`
 const inputText = css`
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  input {
+  gap: 4px;
+  width: 100%;
+  max-width: 500px;
+
+  input[type='text'] {
     padding: 8px 12px;
-    width: 100%;
-    max-width: 600px;
-    flex-grow: 1;
   }
+`;
+
+const inputCheckbox = css`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 const listContainerStyle = css`

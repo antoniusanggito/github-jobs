@@ -143,7 +143,7 @@ const contentWrapperStyle = css`
   }
 `;
 
-const InfoCard = styled.div`
+export const InfoCard = styled.div`
   margin: 10px 0;
   padding: 10px;
   border: 6px solid #eee;
