@@ -34,7 +34,12 @@ const JobDetail = () => {
         setJobDetail(res.data);
       })
       .catch((err) => {
-        toast.error(`Error ${err.status}: ${err.data.message}`);
+        if (err.status === 401) {
+          navigate('/', { replace: true });
+          toast.error(`Error ${err.status}: Session expired`);
+        } else {
+          toast.error(`Error ${err.status}: ${err.data.message}`);
+        }
       });
   }, [id]);
 

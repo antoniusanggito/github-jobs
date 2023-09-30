@@ -42,7 +42,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
   const login = (token: string) => {
     setAuth({ isLoggedIn: true, token });
-    Cookies.set('token', token);
+    Cookies.set('token', token, {
+      expires: new Date(new Date().getTime() + 120 * 60 * 1000), // 2 hours session
+    });
     navigate('/job', { replace: true });
   };
   const logout = () => {

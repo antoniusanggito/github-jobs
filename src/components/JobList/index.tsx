@@ -5,7 +5,7 @@ import withAuth from '../utils/AuthHOC/withAuth';
 import { getAllJobRequest } from '../../axios/services/getAllJob';
 import toast from 'react-hot-toast';
 import { css } from '@emotion/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Button } from '../shared/Button.styled';
 
@@ -31,6 +31,7 @@ interface formValues {
 }
 
 const JobList: React.FC = () => {
+  const navigate = useNavigate();
   const [jobList, setJobList] = useState<jobListType[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
@@ -64,7 +65,12 @@ const JobList: React.FC = () => {
         }
       })
       .catch((err) => {
-        toast.error(`Error ${err.status}: ${err.data.message}`);
+        if (err.status === 401) {
+          navigate('/', { replace: true });
+          toast.error(`Error ${err.status}: Session expired`);
+        } else {
+          toast.error(`Error ${err.status}: ${err.data.message}`);
+        }
       });
   }, [page, search]);
 
