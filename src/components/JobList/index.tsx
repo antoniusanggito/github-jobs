@@ -27,44 +27,61 @@ interface formValues {
   description?: string;
   location?: string;
   full_time?: boolean;
-  page?: number;
 }
 
 const JobList: React.FC = () => {
   const [jobList, setJobList] = useState<jobListType[]>([]);
+  const [total, setTotal] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
+
   const [form, setForm] = useState<formValues>({
     description: '',
     location: '',
     full_time: false,
-    page: 1,
   });
+  const [search, setSearch] = useState<formValues>(form);
+
+  console.log(jobList);
 
   useEffect(() => {
-    getAllJobRequest({})
+    const payload = {
+      description: search.description,
+      location: search.location,
+      full_time: search.full_time,
+      page,
+    };
+    getAllJobRequest(payload)
       .then((res) => {
-        setJobList(res.data);
+        if (page === 1) {
+          setJobList(res.data.jobs);
+          setTotal(res.data.total);
+        } else {
+          const checker = res.data.jobs.every((job: jobListType) =>
+            jobList.includes(job)
+          );
+          if (!checker) {
+            setJobList((prev) => [...prev].concat(res.data.jobs));
+            setTotal(res.data.total);
+          }
+        }
       })
       .catch((err) => {
         toast.error(`Error ${err.status}: ${err.data.message}`);
       });
-  }, []);
+  }, [page, search]);
 
   const handleSearch = async (e: any) => {
     e.preventDefault();
-    const payload = {
+    setSearch({
       description: form.description === '' ? undefined : form.description,
       location: form.location === '' ? undefined : form.location,
-      full_time: form.full_time,
-      page: form.page,
-    };
-    console.log(payload);
-    getAllJobRequest(payload)
-      .then((res) => {
-        setJobList(res.data);
-      })
-      .catch((err) => {
-        toast.error(`Error ${err.status}: ${err.data.message}`);
-      });
+      full_time: form.full_time === false ? undefined : form.full_time,
+    });
+    setPage(1);
+  };
+
+  const handleMore = async () => {
+    setPage((prev) => prev + 1);
   };
 
   return (
@@ -135,6 +152,7 @@ const JobList: React.FC = () => {
             </JobCard>
           </Link>
         ))}
+        {page * 5 < total && <MoreBtn onClick={handleMore}>More Jobs</MoreBtn>}
       </section>
     </Layout>
   );
@@ -150,6 +168,11 @@ const formContainerStyle = css`
     display: flex;
     gap: 40px;
     align-items: center;
+
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
 
   label {
@@ -228,6 +251,21 @@ const JobCard = styled.div`
 
   &:hover {
     background: #eee;
+  }
+`;
+
+const MoreBtn = styled.button`
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  padding: 8px 0;
+  border-radius: 6px;
+  background: var(--clr-primary);
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.2);
   }
 `;
 
