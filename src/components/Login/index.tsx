@@ -6,6 +6,7 @@ import { loginRequest } from '../../axios/services/loginRequest';
 import toast from 'react-hot-toast';
 import withoutAuth from '../utils/AuthHOC/withoutAuth';
 import { useAuth } from '../context/AuthContext';
+import { Button } from '../shared/Button.styled';
 
 const Login = () => {
   const { login } = useAuth();
@@ -48,8 +49,20 @@ const Login = () => {
             placeholder="Password"
             required
           />
-          <button type="submit">Login</button>
+          <Button
+            type="submit"
+            css={css`
+              align-self: flex-end;
+              margin: 20px 0;
+            `}
+          >
+            <h3>Login</h3>
+          </Button>
         </form>
+        <p css={info}>
+          *No requirement for register, valid credential examples can be found
+          in file database.sql server (e.g. john: john123)
+        </p>
       </section>
     </Layout>
   );
@@ -58,10 +71,8 @@ const Login = () => {
 const loginSection = css`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  width: 95%;
-  max-width: 500px;
   min-height: 100%;
 
   /* margin: 0 auto; */
@@ -73,12 +84,20 @@ const loginSection = css`
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    width: 100%;
+    max-width: 300px;
   }
 
   input {
     height: 40px;
-    padding: 4px 8px;
+    width: 100%;
+    padding: 8px 12px;
   }
+`;
+
+const info = css`
+  font-style: italic;
+  color: #888;
 `;
 
 export default withoutAuth(Login);

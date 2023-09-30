@@ -128,10 +128,19 @@ const contentWrapperStyle = css`
   display: flex;
   width: 100%;
 
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
+
   & > div:first-child {
     flex-grow: 1;
     margin-right: 20px;
     max-width: 70vw;
+
+    @media screen and (max-width: 767px) {
+      margin-right: 0;
+      max-width: 100%;
+    }
   }
 
   & > div:last-child {

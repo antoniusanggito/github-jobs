@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { Button } from '../shared/Button.styled';
 
 type jobListType = {
   title: string;
@@ -33,15 +34,12 @@ const JobList: React.FC = () => {
   const [jobList, setJobList] = useState<jobListType[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [page, setPage] = useState<number>(1);
-
   const [form, setForm] = useState<formValues>({
     description: '',
     location: '',
     full_time: false,
   });
   const [search, setSearch] = useState<formValues>(form);
-
-  console.log(jobList);
 
   useEffect(() => {
     const payload = {
@@ -125,13 +123,22 @@ const JobList: React.FC = () => {
             />
             <label htmlFor="full_time">Full Time Only</label>
           </div>
-          <button type="submit">
+          <Button type="submit">
             <h3>Search</h3>
-          </button>
+          </Button>
         </form>
       </section>
       <section css={listContainerStyle}>
         <h2>Job List</h2>
+        {jobList.length === 0 && (
+          <p
+            css={css`
+              font-style: italic;
+            `}
+          >
+            No jobs available
+          </p>
+        )}
         {jobList.map((job) => (
           <Link to={`/job/${job.id}`} key={job.id}>
             <JobCard>
@@ -177,23 +184,6 @@ const formContainerStyle = css`
 
   label {
     font-weight: bold;
-  }
-
-  form > button {
-    background: var(--clr-primary);
-    border: 1px solid var(--clr-secondary);
-    border-radius: 4px;
-    padding: 12px 16px;
-    color: #fff;
-    cursor: pointer;
-
-    h3 {
-      margin: 0;
-    }
-
-    &:hover {
-      background-color: var(--clr-secondary);
-    }
   }
 `;
 
