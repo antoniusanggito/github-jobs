@@ -2,15 +2,26 @@
 import React, { useState } from 'react';
 import Layout from '../Layout';
 import { css } from '@emotion/react';
+import { useAuth } from '../context/AuthContext';
+import { loginRequest } from '../../axios/services/loginRequest';
+import toast from 'react-hot-toast';
 
-type Props = {};
+const Login = () => {
+  const { login } = useAuth();
 
-const Login = (props: Props) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = () => {
-    console.log(username, password);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await loginRequest({ username, password });
+      const { resUsername, token } = response.data;
+      toast.success('Login success!');
+      login(resUsername);
+    } catch (error: any) {
+      toast.error(`Error ${error.status}: ${error.data.message}`);
+    }
   };
 
   return (
@@ -25,6 +36,7 @@ const Login = (props: Props) => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Username"
+            required
           />
           <input
             type="password"
@@ -33,6 +45,7 @@ const Login = (props: Props) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
+            required
           />
           <button type="submit">Login</button>
         </form>
@@ -47,7 +60,7 @@ const loginSection = css`
   justify-content: center;
   align-items: center;
   width: 95%;
-  max-width: 400px;
+  max-width: 500px;
   min-height: 100%;
 
   /* margin: 0 auto; */
