@@ -23,8 +23,21 @@ type jobListType = {
   url: string;
 };
 
+interface formValues {
+  description?: string;
+  location?: string;
+  full_time?: boolean;
+  page?: number;
+}
+
 const JobList: React.FC = () => {
   const [jobList, setJobList] = useState<jobListType[]>([]);
+  const [form, setForm] = useState<formValues>({
+    description: '',
+    location: '',
+    full_time: false,
+    page: 1,
+  });
 
   useEffect(() => {
     getAllJobRequest({})
@@ -36,9 +49,69 @@ const JobList: React.FC = () => {
       });
   }, []);
 
+  const handleSearch = async (e: any) => {
+    e.preventDefault();
+    const payload = {
+      description: form.description === '' ? undefined : form.description,
+      location: form.location === '' ? undefined : form.location,
+      full_time: form.full_time,
+      page: form.page,
+    };
+    console.log(payload);
+    getAllJobRequest(payload)
+      .then((res) => {
+        setJobList(res.data);
+      })
+      .catch((err) => {
+        toast.error(`Error ${err.status}: ${err.data.message}`);
+      });
+  };
+
   return (
     <Layout>
-      <section css={sectionStyle}>
+      <section css={formContainerStyle}>
+        <form onSubmit={handleSearch}>
+          <div css={inputText}>
+            <label htmlFor="description">Job Description</label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              value={form.description}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, description: e.target.value }))
+              }
+              placeholder="Filter by title, benefits, companies, expertise"
+            />
+          </div>
+          <div css={inputText}>
+            <label htmlFor="location">Location</label>
+            <input
+              type="text"
+              name="location"
+              id="location"
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, location: e.target.value }))
+              }
+              placeholder="Filter by city, state, zip code or country"
+            />
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              name="full_time"
+              id="full_time"
+              checked={form.full_time}
+              onChange={(e) =>
+                setForm((prev) => ({ ...prev, full_time: !form.full_time }))
+              }
+            />
+            <label htmlFor="location">Full Time Only</label>
+          </div>
+          <input type="submit" value="Search" />
+        </form>
+      </section>
+      <section css={listContainerStyle}>
         <h2>Job List</h2>
         {jobList.map((job) => (
           <Link to={`/job/${job.id}`} key={job.id}>
@@ -65,7 +138,34 @@ const JobList: React.FC = () => {
   );
 };
 
-const sectionStyle = css`
+const formContainerStyle = css`
+  form {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+
+    label {
+      font-weight: bold;
+    }
+  }
+`;
+
+const inputText = css`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  input {
+    padding: 8px 12px;
+    width: 100%;
+    max-width: 600px;
+    flex-grow: 1;
+  }
+`;
+
+const listContainerStyle = css`
   width: 95%;
   max-width: 1400px;
   margin: 0 auto 3rem auto;

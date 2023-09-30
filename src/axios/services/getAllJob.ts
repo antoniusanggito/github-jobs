@@ -2,7 +2,12 @@ import axios from 'axios';
 import { headers, endpoint } from '../constants';
 import Cookies from 'js-cookie';
 
-interface getAllJobParam {}
+interface getAllJobParam {
+  description?: string;
+  location?: string;
+  full_time?: boolean;
+  page?: number;
+}
 
 export const getAllJobRequest = async (params: getAllJobParam) => {
   const options = {
@@ -10,6 +15,7 @@ export const getAllJobRequest = async (params: getAllJobParam) => {
       ...headers,
       Authorization: `Bearer ${Cookies.get('token')}`,
     },
+    params,
   };
 
   try {
