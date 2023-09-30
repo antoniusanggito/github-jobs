@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import Layout from '../Layout';
 import { css } from '@emotion/react';
-import { useAuth } from '../context/AuthContext';
 import { loginRequest } from '../../axios/services/loginRequest';
 import toast from 'react-hot-toast';
+import withoutAuth from '../utils/AuthHOC/withoutAuth';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const { login } = useAuth();
@@ -16,9 +17,9 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await loginRequest({ username, password });
-      const { resUsername, token } = response.data;
+      const { token } = response.data;
       toast.success('Login success!');
-      login(resUsername);
+      login(token);
     } catch (error: any) {
       toast.error(`Error ${error.status}: ${error.data.message}`);
     }
@@ -80,4 +81,4 @@ const loginSection = css`
   }
 `;
 
-export default Login;
+export default withoutAuth(Login);
