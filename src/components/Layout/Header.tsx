@@ -2,9 +2,7 @@
 import { css } from '@emotion/react';
 import React from 'react';
 
-type Props = {};
-
-const Header = (props: Props) => {
+const Header = () => {
   return (
     <header css={headerStyle}>
       <h1>GitHub Jobs</h1>

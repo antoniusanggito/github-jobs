@@ -12,8 +12,8 @@ function App() {
       <Routes>
         <Route path="/" element={<JobList />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/positions" element={<JobList />} />
-        <Route path="/positions/:id" element={<JobDetail />} />
+        <Route path="/job" element={<JobList />} />
+        <Route path="/job/:id" element={<JobDetail />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Toaster />

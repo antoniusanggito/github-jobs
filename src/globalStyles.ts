@@ -25,8 +25,8 @@ export default css`
     box-sizing: border-box;
   }
 
-  a {
+  /* a {
     color: inherit;
     text-decoration: none;
-  }
+  } */
 `;

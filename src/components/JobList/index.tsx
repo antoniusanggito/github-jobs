@@ -5,6 +5,7 @@ import withAuth from '../utils/AuthHOC/withAuth';
 import { getAllJobRequest } from '../../axios/services/getAllJob';
 import toast from 'react-hot-toast';
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 type jobListType = {
   title: string;
@@ -16,18 +17,17 @@ type jobListType = {
   company_logo: string;
   company_url: string;
   description: string;
-  how_to_pply: string;
+  how_to_apply: string;
   id: string;
   url: string;
 };
 
-const JobList = () => {
+const JobList: React.FC = () => {
   const [jobList, setJobList] = useState<jobListType[]>([]);
 
   useEffect(() => {
     getAllJobRequest({})
       .then((res) => {
-        console.log(res.data);
         setJobList(res.data);
       })
       .catch((err) => {
@@ -35,27 +35,31 @@ const JobList = () => {
       });
   }, []);
 
+  const handleClick = () => {};
+
   return (
     <Layout>
       <section css={sectionStyle}>
         <h2>Job List</h2>
         {jobList.map((job) => (
-          <div key={job.id} css={cardStyle}>
-            <div>
-              <h4>{job.title}</h4>
-              <p>
-                {job.company} – <span>{job.type}</span>
-              </p>
+          <Link to={`/job/${job.id}`} key={job.id}>
+            <div css={cardStyle} onClick={handleClick}>
+              <div>
+                <h4>{job.title}</h4>
+                <p>
+                  {job.company} – <span>{job.type}</span>
+                </p>
+              </div>
+              <div
+                css={css`
+                  text-align: right;
+                `}
+              >
+                <h4>{job.location}</h4>
+                <p>Time</p>
+              </div>
             </div>
-            <div
-              css={css`
-                text-align: right;
-              `}
-            >
-              <h4>{job.location}</h4>
-              <p>Time</p>
-            </div>
-          </div>
+          </Link>
         ))}
       </section>
     </Layout>
@@ -66,6 +70,11 @@ const sectionStyle = css`
   width: 95%;
   max-width: 1400px;
   margin: 0 auto;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `;
 
 const cardStyle = css`

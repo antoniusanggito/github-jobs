@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-const withAuth: (WrappedComponent: React.FC) => React.FC = (
+const withAuth: (WrappedComponent: React.FC<any>) => React.FC = (
   WrappedComponent: React.FC
 ) => {
   const HocComponent: React.FC = ({ ...props }) => {
