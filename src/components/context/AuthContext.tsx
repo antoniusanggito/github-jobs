@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const login = (token: string) => {
     setAuth({ isLoggedIn: true, token });
     Cookies.set('token', token);
-    navigate('/', { replace: true });
+    navigate('/job', { replace: true });
   };
   const logout = () => {
     setAuth({ isLoggedIn: false, token: '' });

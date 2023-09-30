@@ -11,7 +11,7 @@ const withoutAuth: (WrappedComponent: React.FC) => React.FC = (
 
     useEffect(() => {
       if (auth.isLoggedIn === true) {
-        navigate('/', { replace: true });
+        navigate('/job', { replace: true });
       }
     }, [auth, navigate]);
 

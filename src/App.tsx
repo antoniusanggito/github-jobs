@@ -10,7 +10,7 @@ function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<JobList />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/job" element={<JobList />} />
         <Route path="/job/:id" element={<JobDetail />} />
