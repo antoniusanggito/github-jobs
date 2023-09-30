@@ -46,6 +46,7 @@ const JobDetail = () => {
     <Layout>
       <section css={sectionStyle}>
         <Back onClick={handleBack}>
+          <img src="/images/left-arrow.svg" alt="back icon" />
           <h3>Back</h3>
         </Back>
         {jobDetail && (
@@ -93,12 +94,34 @@ const JobDetail = () => {
 const Back = styled.div`
   margin: 20px 0;
   cursor: pointer;
+  display: flex;
+  width: fit-content;
+  gap: 4px;
+  align-items: center;
+  color: var(--clr-primary);
+  padding: 4px;
+
+  h3 {
+    margin: 0;
+  }
+
+  &:hover {
+    background: #eee;
+  }
 `;
 
 const sectionStyle = css`
   width: 95%;
   max-width: 1400px;
   margin: 0 auto;
+
+  span {
+    color: #888;
+  }
+
+  h2 {
+    color: var(--clr-secondary);
+  }
 `;
 
 const contentWrapperStyle = css`
@@ -108,6 +131,7 @@ const contentWrapperStyle = css`
   & > div:first-child {
     flex-grow: 1;
     margin-right: 20px;
+    max-width: 70vw;
   }
 
   & > div:last-child {

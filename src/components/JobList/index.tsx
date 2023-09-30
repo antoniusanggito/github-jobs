@@ -6,6 +6,7 @@ import { getAllJobRequest } from '../../axios/services/getAllJob';
 import toast from 'react-hot-toast';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
+import styled from '@emotion/styled';
 
 type jobListType = {
   title: string;
@@ -35,17 +36,15 @@ const JobList: React.FC = () => {
       });
   }, []);
 
-  const handleClick = () => {};
-
   return (
     <Layout>
       <section css={sectionStyle}>
         <h2>Job List</h2>
         {jobList.map((job) => (
           <Link to={`/job/${job.id}`} key={job.id}>
-            <div css={cardStyle} onClick={handleClick}>
+            <JobCard>
               <div>
-                <h4>{job.title}</h4>
+                <h3>{job.title}</h3>
                 <p>
                   {job.company} – <span>{job.type}</span>
                 </p>
@@ -56,9 +55,9 @@ const JobList: React.FC = () => {
                 `}
               >
                 <h4>{job.location}</h4>
-                <p>Time</p>
+                <p>{`Created: ${job.created_at}`}</p>
               </div>
-            </div>
+            </JobCard>
           </Link>
         ))}
       </section>
@@ -69,7 +68,11 @@ const JobList: React.FC = () => {
 const sectionStyle = css`
   width: 95%;
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
+
+  h2 {
+    color: var(--clr-secondary);
+  }
 
   a {
     color: inherit;
@@ -77,14 +80,27 @@ const sectionStyle = css`
   }
 `;
 
-const cardStyle = css`
+const JobCard = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
+  padding: 0 10px;
+
+  h3 {
+    color: var(--clr-primary);
+  }
+
+  p {
+    color: #888;
+  }
 
   span {
     font-weight: bold;
     color: var(--clr-info);
+  }
+
+  &:hover {
+    background: #eee;
   }
 `;
 
