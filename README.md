@@ -1,46 +1,26 @@
-# Getting Started with Create React App
+# GitHub-Job Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+This project is developed with TypeScript Create-React-App, CSS-in-JS Emotion for styling, React Context for Auth, and additional library such as react-hot-toast and js-cookie for supplementary.
 
-In the project directory, you can run:
+This is the React client-side repo of the GitHub-Job project. Pages available:
 
-### `npm start`
+- `/` or `/login` to login with provided credential. Getting JWT token and save it in cookies (expiration set 2 hours, no refresh token yet).
+- `/job` after login to view job list with pagination (infinite scroll) and to search using provided fields/params.
+- `/job/:id` after clicking on a job card, viewing the job's details.
+  User can also logout after login.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How to Run
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. Create `.env` from given `.env.example` for working provided SQL login credentials. (or manual hash bcrypt by yourself because of no register functionality in requirements).
+2. Execute provided `database.sql` query for setup and credential examples.
+3. Run following commands:
 
-### `npm test`
+```bash
+# install dependencies
+npm i
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+# run server (at localhost:3000)
+npm start
+```
