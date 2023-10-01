@@ -13,8 +13,8 @@ This is the React client-side repo of the GitHub-Job project. Pages available:
 
 ## How to Run
 
-1. Create `.env` from given `.env.example` for working provided SQL login credentials. (or manual hash bcrypt by yourself because of no register functionality in requirements).
-2. Execute provided `database.sql` query for setup and credential examples.
+1. Create `.env` from given `.env.example` to connect with running backend server repo.
+2. Execute provided `database.sql` query for backend setup and credential examples.
 3. Run following commands:
 
 ```bash
